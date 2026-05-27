@@ -27,7 +27,7 @@ Workflow:
   6. Dean of Students sees only the overall number of votes polled.
 """
 
-import http.server, json, threading, socket, secrets, time
+import http.server, json, threading, socket, secrets, time, os
 from urllib.parse import urlparse
 
 # ---------- Candidates ------------------------------------------------------
@@ -439,14 +439,14 @@ LOGIN_HTML = """<!DOCTYPE html><html lang="en"><head>%s
 <style>
 .loginCard{{position:relative;overflow:hidden}}
 .loginCard::before{{
-  content:'';position:absolute;inset:-40%;
-  background:radial-gradient(circle at 25% 25%, rgba(201,168,76,.18), transparent 55%),
-             radial-gradient(circle at 75% 55%, rgba(37,99,235,.16), transparent 60%);
+  content:'';position:absolute;inset:-40%%;
+  background:radial-gradient(circle at 25%% 25%%, rgba(201,168,76,.18), transparent 55%%),
+             radial-gradient(circle at 75%% 55%%, rgba(37,99,235,.16), transparent 60%%);
   filter:blur(12px);
   animation:loginGlow 10s ease-in-out infinite;
   pointer-events:none;
 }}
-@keyframes loginGlow{{0%,100%{{transform:translate(-2%,-1%)}}50%{{transform:translate(2%,1%)}}}}
+@keyframes loginGlow{{0%%,100%%{{transform:translate(-2%%,-1%%)}}50%%{{transform:translate(2%%,1%%)}}}}
 .loginCard > *{{position:relative;z-index:1}}
 .roleHint{{margin-top:10px;text-align:center;font-size:12px;color:var(--card-muted)}}
 .miniLinks{{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:14px}}
@@ -465,7 +465,7 @@ html[data-theme="midnight"] .miniLinks a{{border-color:rgba(255,255,255,.18);col
     <div class="sub">Principal · Dean · Polling Officer</div>
     <div class="field"><label>Username</label><input id="u" autocomplete="username"></div>
     <div class="field"><label>Password</label><input id="p" type="password" autocomplete="current-password"></div>
-    <button class="btn btn-gold" style="width:100%" onclick="login()">Sign In</button>
+    <button class="btn btn-gold" style="width:100%%" onclick="login()">Sign In</button>
     <div class="err" id="le">Invalid credentials. Please try again.</div>
     <div class="status" id="okMsg">Signed in. Redirecting…</div>
     <div class="roleHint">Enter the same credentials — you’ll be taken to the correct dashboard automatically.</div>
@@ -2009,7 +2009,7 @@ class ThreadingServer(http.server.ThreadingHTTPServer):
     daemon_threads = True
 
 if __name__ == "__main__":
-    PORT = 8080
+    PORT = int(os.environ.get("PORT", 8080))
     ip = get_local_ip()
     server = ThreadingServer(("0.0.0.0", PORT), Handler)
     print()
